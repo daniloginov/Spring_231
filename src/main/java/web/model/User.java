@@ -1,34 +1,51 @@
 package web.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "id")
+    private long id;
 
     @Column(name = "name")
-    private String name;
+    @NotBlank(message = "Name not empty!")
+    private  String name;
 
-    @Column(name = "age")
-    private int age;
+    @Column(name = "surname")
+    @NotBlank(message = "Surname not empty!")
+    private String surname;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "department")
+    @NotBlank(message = "Department not empty!")
+    private String department;
+
+    @Column(name = "salary")
+    @Min(value = 1,message = "Salary >0")
+    @Max(value = 100,message = "Salary <=100")
+    private int salary;
 
     public User() {
     }
 
-    public User(String name, int age, String email) {
+    public User( String name, String surname, String department, int salary) {
         this.name = name;
-        this.age = age;
-        this.email = email;
+        this.surname = surname;
+        this.department = department;
+        this.salary = salary;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -39,20 +56,28 @@ public class User {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public String getEmail() {
-        return email;
+    public String getDepartment() {
+        return department;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
     }
 
     @Override
@@ -60,8 +85,9 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", age=" + age +
-                ", email='" + email + '\'' +
+                ", surname='" + surname + '\'' +
+                ", department='" + department + '\'' +
+                ", salary=" + salary +
                 '}';
     }
 }
